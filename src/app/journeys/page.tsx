@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { SectionHeading } from "@/components/section-heading";
 import { JourneyCard } from "@/components/journey-card";
 import { ButtonLink } from "@/components/ui/button";
-import { getRegions, journeys } from "@/lib/journeys";
+import Link from "next/link";
+import { getRegions, journeys, type Region } from "@/lib/journeys";
 
 export const metadata: Metadata = {
   title: "Signature journeys",
@@ -10,8 +11,11 @@ export const metadata: Metadata = {
     "Six journeys we have travelled ourselves, each a starting point for something designed around you.",
 };
 
-export default function JourneysPage() {
+export default async function JourneysPage(props: PageProps<"/journeys">) {
+  const { region: regionParam } = await props.searchParams;
   const regions = getRegions();
+  const active = regions.find((r) => r === regionParam) as Region | undefined;
+  const visible = active ? journeys.filter((j) => j.region === active) : journeys;
 
   return (
     <>
@@ -22,16 +26,28 @@ export default function JourneysPage() {
           title="Travelled by us first"
           intro="None of these is sold as it appears. Each is a sketch we redraw around the people going, the season and the pace you want."
         />
-        <ul className="mt-10 flex flex-wrap gap-x-6 gap-y-2 text-[0.72rem] uppercase tracking-[0.18em] text-stone">
+        <ul className="mt-10 flex flex-wrap gap-x-6 gap-y-2 text-[0.72rem] uppercase tracking-[0.18em]" aria-label="Filter by region">
+          <li>
+            <Link href="/journeys" className={active ? "text-stone hover:text-ink" : "border-b border-ink text-ink"}>
+              All
+            </Link>
+          </li>
           {regions.map((region) => (
-            <li key={region}>{region}</li>
+            <li key={region}>
+              <Link
+                href={`/journeys?region=${region}`}
+                className={active === region ? "border-b border-ink text-ink" : "text-stone hover:text-ink"}
+              >
+                {region}
+              </Link>
+            </li>
           ))}
         </ul>
       </section>
 
       <section className="container-luxe py-20">
         <div className="grid gap-x-10 gap-y-16 sm:grid-cols-2 lg:grid-cols-3">
-          {journeys.map((journey) => (
+          {visible.map((journey) => (
             <JourneyCard key={journey.slug} journey={journey} />
           ))}
         </div>

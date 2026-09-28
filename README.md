@@ -39,9 +39,11 @@ Open http://localhost:3000.
 ```
 src/
   app/
-    page.tsx                 Home
-    journeys/                Signature journeys and detail pages
-    membership/              Membership tiers and FAQ
+    page.tsx                 Home (split hero, cards, carousels, destinations, enquiry form)
+    journeys/                Signature journeys (with region filter) and detail pages
+    membership/              Membership tiers, corporate membership and FAQ
+    contact/                 Enquiry form and server action
+    members/                 Members' area placeholder
     request/                 Concierge intake form, server action, confirmation
     api/requests/route.ts    JSON intake endpoint (POST)
     sitemap.ts, robots.ts    SEO
@@ -50,13 +52,17 @@ src/
     journeys.ts              Journey content
     membership.ts            Tier content
     requests/schema.ts       Zod schema and parsing helpers
-    requests/store.ts        Append-only JSON store for requests
+    requests/store.ts        Append-only JSON store (requests and enquiries)
+    enquiries/schema.ts      Zod schema for the membership enquiry form
+    services.ts, testimonials.ts, destinations.ts   Home page content
     site.ts                  Site-wide config (name, contact, nav)
 ```
 
 ## Concierge requests
 
 The form at `/request` posts to a Server Action, validates with Zod, and stores the request in `data/requests.json` (ignored by git). Each request gets a reference like `OFF-7K3M9Q` that is shown on the confirmation page.
+
+The membership enquiry form on the home page and `/contact` works the same way and stores to `data/enquiries.json`.
 
 The same validation backs `POST /api/requests`, which accepts a JSON body with the same fields and returns `201` with the reference, or `422` with per-field errors.
 

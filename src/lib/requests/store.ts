@@ -3,20 +3,30 @@ import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import type { ConciergeRequest } from "./schema";
 
-export type StoredRequest = ConciergeRequest & {
+export type Stored<T> = T & {
   reference: string;
   receivedAt: string;
 };
 
-/**
- * A deliberately simple append-only JSON store. It keeps the intake flow
- * working with zero infrastructure; swap it for a database or CRM by
- * replacing `saveRequest` and `listRequests`.
- */
-const DEFAULT_FILE = path.join(process.cwd(), "data", "requests.json");
+export type StoredRequest = Stored<ConciergeRequest>;
 
-function storeFile(): string {
-  return process.env.OFFNESS_REQUESTS_FILE ?? DEFAULT_FILE;
+/**
+ * A deliberately simple append-only JSON store. It keeps the intake flows
+ * working with zero infrastructure; swap it for a database or CRM by
+ * replacing `appendRecord` and `listRecords`.
+ */
+const DATA_DIR = path.join(process.cwd(), "data");
+
+export type StoreName = "requests" | "enquiries";
+
+function storeFile(name: StoreName): string {
+  if (name === "requests" && process.env.OFFNESS_REQUESTS_FILE) {
+    return process.env.OFFNESS_REQUESTS_FILE;
+  }
+  if (name === "enquiries" && process.env.OFFNESS_ENQUIRIES_FILE) {
+    return process.env.OFFNESS_ENQUIRIES_FILE;
+  }
+  return path.join(DATA_DIR, `${name}.json`);
 }
 
 /** Short, unambiguous reference like OFF-7K3M9Q. No 0/O or 1/I. */
@@ -30,11 +40,11 @@ export function makeReference(): string {
   return `OFF-${out}`;
 }
 
-export async function listRequests(): Promise<StoredRequest[]> {
+export async function listRecords<T>(name: StoreName): Promise<Stored<T>[]> {
   try {
-    const raw = await readFile(/* turbopackIgnore: true */ storeFile(), "utf8");
+    const raw = await readFile(/* turbopackIgnore: true */ storeFile(name), "utf8");
     const parsed: unknown = JSON.parse(raw);
-    return Array.isArray(parsed) ? (parsed as StoredRequest[]) : [];
+    return Array.isArray(parsed) ? (parsed as Stored<T>[]) : [];
   } catch (error) {
     if ((error as NodeJS.ErrnoException).code === "ENOENT") {
       return [];
@@ -43,12 +53,12 @@ export async function listRequests(): Promise<StoredRequest[]> {
   }
 }
 
-export async function saveRequest(request: ConciergeRequest): Promise<StoredRequest> {
-  const file = storeFile();
+export async function appendRecord<T extends object>(name: StoreName, record: T): Promise<Stored<T>> {
+  const file = storeFile(name);
   await mkdir(/* turbopackIgnore: true */ path.dirname(file), { recursive: true });
-  const existing = await listRequests();
-  const stored: StoredRequest = {
-    ...request,
+  const existing = await listRecords<T>(name);
+  const stored: Stored<T> = {
+    ...record,
     reference: makeReference(),
     receivedAt: new Date().toISOString(),
   };
@@ -58,4 +68,12 @@ export async function saveRequest(request: ConciergeRequest): Promise<StoredRequ
     "utf8",
   );
   return stored;
+}
+
+export function listRequests(): Promise<StoredRequest[]> {
+  return listRecords<ConciergeRequest>("requests");
+}
+
+export function saveRequest(request: ConciergeRequest): Promise<StoredRequest> {
+  return appendRecord("requests", request);
 }

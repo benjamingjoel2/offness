@@ -91,7 +91,30 @@ export default function MembershipPage() {
         </p>
       </section>
 
-      <section className="border-t hairline bg-ivory-deep">
+      <section id="corporate" className="scroll-mt-20 border-t hairline">
+        <div className="container-luxe grid gap-12 py-20 lg:grid-cols-[1fr_2fr]">
+          <SectionHeading
+            eyebrow="Corporate membership"
+            title="For the business, and the people who run it"
+          />
+          <div className="max-w-2xl space-y-5 text-sm leading-relaxed text-ink-soft sm:text-base">
+            <p>
+              Corporate membership extends the service to leadership teams, boards and their
+              families. A designated manager handles travel, hospitality and access for the
+              business, and quietly looks after the private lives of the people in it.
+            </p>
+            <p>
+              Terms are agreed per company. Most begin with a House membership per principal plus a
+              shared concierge line for the office, and grow from there.
+            </p>
+            <ButtonLink href="/contact" variant="outline">
+              Discuss corporate membership
+            </ButtonLink>
+          </div>
+        </div>
+      </section>
+
+      <section id="questions" className="scroll-mt-20 border-t hairline bg-ivory-deep">
         <div className="container-luxe grid gap-12 py-20 lg:grid-cols-[1fr_2fr]">
           <SectionHeading eyebrow="Questions" title="Asked often" />
           <dl className="divide-y hairline border-y">
