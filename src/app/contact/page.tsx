@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { EnquiryForm } from "@/components/enquiry-form";
 import { siteConfig } from "@/lib/site";
+import { WhatsAppButton, WhatsAppDetails } from "@/components/whatsapp";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -14,9 +15,13 @@ export default function ContactPage() {
         <p className="eyebrow">Contact</p>
         <h1 className="display mt-4 text-4xl text-ink sm:text-5xl">Make an enquiry</h1>
         <p className="mt-5 text-sm leading-relaxed text-ink-soft">
-          Tell us how we can help. A member of the concierge team replies personally, usually within
-          a business day.
+          The quickest way to reach us is WhatsApp, any hour. For anything you would rather put in
+          writing, the form below reaches the same team.
         </p>
+        <div className="mt-8 flex flex-col items-center gap-3">
+          <WhatsAppButton message="Hello Offness," />
+          <WhatsAppDetails />
+        </div>
         <dl className="mt-8 flex flex-wrap justify-center gap-x-10 gap-y-3 text-sm">
           <div>
             <dt className="sr-only">Phone</dt>

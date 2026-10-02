@@ -2,7 +2,11 @@
 
 Luxury travel concierge. A private service that designs and manages journeys end to end for a small number of members.
 
-This repository holds the Offness web application: the public site, the curated journeys, and the concierge request intake.
+This repository holds the Offness web application: the public site, the curated journeys, and the membership intake.
+
+The service model follows chat-first members' concierges: members simply message a designer on WhatsApp, any hour, and get a reply within minutes. WhatsApp is therefore the primary call to action on every page (a floating button plus in-context buttons with pre-filled messages). The forms remain as a secondary, written route.
+
+Set the real WhatsApp number in `src/lib/site.ts` (`siteConfig.whatsapp`) before launch; the committed value is a reserved placeholder.
 
 ## Stack
 

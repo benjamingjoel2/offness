@@ -5,11 +5,17 @@ export const siteConfig = {
   name: "Offness",
   tagline: "Luxury travel concierge",
   description:
-    "Offness is a private travel concierge. We design and manage journeys end to end, from first idea to the last transfer home, for a small number of members.",
+    "Offness is a private travel concierge you simply message. One WhatsApp, any hour, and a designer takes it from there: journeys, access, houses, boats and everything in between.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://offness.com",
   email: "concierge@offness.com",
   phone: "+44 20 3000 0000",
-  hours: "Every day from 07:00 to 22:00 (London time)",
+  hours: "24 hours a day, every day",
+  /** WhatsApp is the primary channel. Placeholder number: replace before launch. */
+  whatsapp: {
+    number: "447700900000",
+    display: "+44 7700 900000",
+    responseTime: "a reply within minutes",
+  },
   offices: ["London", "Geneva", "Singapore", "Dubai", "New York"],
   nav: [
     {
@@ -31,7 +37,7 @@ export const siteConfig = {
       ],
     },
     { href: "/journeys", label: "Journeys" },
-    { href: "/#about", label: "About us" },
+    { href: "/#how-it-works", label: "How it works" },
     { href: "/contact", label: "Contact" },
   ] as NavItem[],
   footer: {
@@ -52,10 +58,12 @@ export const siteConfig = {
     members: [
       { href: "/members", label: "Members' area" },
       { href: "/request", label: "Apply to join" },
+      { href: "/#how-it-works", label: "How it works" },
     ],
     contact: [
-      { href: "/contact", label: "Send us a message" },
-      { href: "/request", label: "Request a call" },
+      { href: "https://wa.me/447700900000", label: "Message us on WhatsApp" },
+      { href: "/contact", label: "Send an enquiry" },
+      { href: "/request", label: "Apply for membership" },
       { href: "/membership#questions", label: "FAQ" },
     ],
     legal: [
@@ -65,3 +73,9 @@ export const siteConfig = {
     ],
   },
 } as const;
+
+/** A wa.me link with an optional pre-filled message. */
+export function whatsappLink(message?: string): string {
+  const base = `https://wa.me/${siteConfig.whatsapp.number}`;
+  return message ? `${base}?text=${encodeURIComponent(message)}` : base;
+}

@@ -9,9 +9,15 @@ function Column({ title, links }: { title: string; links: readonly { href: strin
       <ul className="mt-5 space-y-3 text-sm">
         {links.map((link) => (
           <li key={link.label}>
-            <Link href={link.href} className="text-ink-soft hover:text-ink">
-              {link.label}
-            </Link>
+            {link.href.startsWith("http") ? (
+              <a href={link.href} target="_blank" rel="noopener noreferrer" className="text-ink-soft hover:text-ink">
+                {link.label}
+              </a>
+            ) : (
+              <Link href={link.href} className="text-ink-soft hover:text-ink">
+                {link.label}
+              </Link>
+            )}
           </li>
         ))}
       </ul>

@@ -3,6 +3,7 @@ import { SectionHeading } from "@/components/section-heading";
 import { ButtonLink } from "@/components/ui/button";
 import { formatGbp } from "@/lib/format";
 import { tiers } from "@/lib/membership";
+import { WhatsAppButton, WhatsAppDetails } from "@/components/whatsapp";
 
 export const metadata: Metadata = {
   title: "Membership",
@@ -12,8 +13,8 @@ export const metadata: Metadata = {
 
 const questions = [
   {
-    q: "Do I need to be a member to make a request?",
-    a: "No. Anyone can send us a request. We take on a small number of individual journeys each year for non-members, and many members begin that way.",
+    q: "Do I need to be a member to message you?",
+    a: "No. Anyone can send us a WhatsApp. We take on a small number of individual journeys each year for non-members, and most members begin that way.",
   },
   {
     q: "What does the annual fee cover?",
@@ -22,6 +23,10 @@ const questions = [
   {
     q: "How many members do you take?",
     a: "We cap membership so that every designer knows every member personally. There is a waiting list at certain times of year.",
+  },
+  {
+    q: "Is there an app?",
+    a: "No. Everything happens in WhatsApp, which you already have. Your designer’s number is saved in your phone, itineraries arrive as documents, and every change is a message.",
   },
   {
     q: "Can I move between levels?",
@@ -37,8 +42,12 @@ export default function MembershipPage() {
           as="h1"
           eyebrow="Membership"
           title="Chosen by the way you travel"
-          intro="Three levels, each with a named designer. The difference is how much we take off your desk and how fast we move."
+          intro="Three levels, each with a named designer you message on WhatsApp. The difference is how much we take off your desk and how fast we move."
         />
+        <div className="mt-8 flex flex-col items-start gap-3">
+          <WhatsAppButton message="Hello Offness, I’d like to ask about membership.">Ask about membership</WhatsAppButton>
+          <WhatsAppDetails />
+        </div>
       </section>
 
       <section className="container-luxe py-20">

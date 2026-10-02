@@ -1,11 +1,11 @@
 import Link from "next/link";
 import { ButtonLink } from "@/components/ui/button";
 import { Carousel } from "@/components/carousel";
-import { EnquiryForm } from "@/components/enquiry-form";
 import { ImageCard } from "@/components/image-card";
 import { JourneyArtwork } from "@/components/journey-artwork";
 import { JourneyTabs } from "@/components/journey-tabs";
 import { Testimonials } from "@/components/testimonials";
+import { WhatsAppButton, WhatsAppDetails } from "@/components/whatsapp";
 import { getDestinations } from "@/lib/destinations";
 import { journeys } from "@/lib/journeys";
 import { tiers } from "@/lib/membership";
@@ -33,23 +33,25 @@ export default function HomePage() {
       {/* 1. Split hero */}
       <section className="grid lg:grid-cols-2">
         <div className="container-luxe flex flex-col justify-center py-16 lg:max-w-none lg:py-24 lg:pl-[max(1.25rem,calc((100vw-80rem)/2+3rem))]">
-          <h1 className="display max-w-xl text-5xl leading-[1.05] text-ink sm:text-6xl">
-            Expect the best.
+          <p className="eyebrow">Luxury travel concierge, on WhatsApp</p>
+          <h1 className="display mt-6 max-w-xl text-5xl leading-[1.05] text-ink sm:text-6xl">
+            Anything you want.
             <br />
-            <em className="italic">Experience better.</em>
+            <em className="italic">One message away.</em>
           </h1>
           <p className="mt-8 max-w-lg text-sm leading-relaxed text-ink-soft sm:text-base">
-            For a small number of members, Offness is the first and last call for travel. From
-            exclusive access to journey design, our travel designers do it all with unhurried,
-            personal attention. We do not just save you time and effort; we elevate every stage of
-            the trip.
+            Offness is a private travel concierge for a small number of members. There is no app
+            to learn and no form to fill in. You send a WhatsApp, any hour of the day, and a
+            designer who knows you takes it from there: the journey, the house, the boat, the
+            table, and everything in between.
           </p>
           <div className="mt-10 flex flex-wrap gap-3">
-            <ButtonLink href="/membership">Private membership</ButtonLink>
-            <ButtonLink href="/membership#corporate" variant="outline">
-              Corporate membership
+            <WhatsAppButton message="Hello Offness, I’d like to talk about a journey." />
+            <ButtonLink href="/request" variant="outline">
+              Apply for membership
             </ButtonLink>
           </div>
+          <WhatsAppDetails className="mt-5" />
         </div>
         <JourneyArtwork
           palette={["#2f4e6f", "#dcc7a3"]}
@@ -89,20 +91,27 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 3. Value proposition band */}
-      <section id="about" className="scroll-mt-20 border-b hairline bg-ivory">
-        <div className="container-luxe grid gap-12 py-16 text-center sm:grid-cols-3 sm:py-20">
-          {[
-            ["Unique", "Journeys", "Each of our journeys is designed from a blank page around the people travelling, never from a template."],
-            ["Tailor-made", "Stays", "From everyday requests to once-in-a-lifetime experiences, we personalise every detail of your stay."],
-            ["A local", "Concierge", "Across fifty destinations, our teams open doors to highly exclusive places and know who to call at 3am."],
-          ].map(([big, small, body]) => (
-            <div key={small} className="mx-auto max-w-xs">
-              <p className="display text-4xl uppercase tracking-[0.04em] text-ink lg:text-[2.75rem]">{big}</p>
-              <p className="mt-1 text-[0.66rem] font-medium uppercase tracking-[0.22em] text-ink">{small}</p>
-              <p className="mt-4 text-sm leading-relaxed text-ink-soft">{body}</p>
-            </div>
-          ))}
+      {/* 3. How it works: message, reply, done */}
+      <section id="how-it-works" className="scroll-mt-20 border-b hairline bg-ivory">
+        <div className="container-luxe py-16 sm:py-20">
+          <SectionTitle className="text-center">How it works</SectionTitle>
+          <div className="mt-12 grid gap-12 text-center sm:grid-cols-3">
+            {[
+              ["Message", "On WhatsApp", "Tell us what you want the way you would tell a friend. A place, a date, a feeling, a photo. No forms, no apps, no hold music."],
+              ["Minutes", "To a reply", "A designer who knows you replies within minutes, any hour, any time zone, and asks only what they need to."],
+              ["Done", "Every detail", "We book, brief, confirm and stay on the line until you are home. Changes are one more message."],
+            ].map(([big, small, body]) => (
+              <div key={small} className="mx-auto max-w-xs">
+                <p className="display text-4xl uppercase tracking-[0.04em] text-ink lg:text-[2.75rem]">{big}</p>
+                <p className="mt-1 text-[0.66rem] font-medium uppercase tracking-[0.22em] text-ink">{small}</p>
+                <p className="mt-4 text-sm leading-relaxed text-ink-soft">{body}</p>
+              </div>
+            ))}
+          </div>
+          <div className="mt-12 flex flex-col items-center gap-4">
+            <WhatsAppButton message="Hello Offness, I’d like to talk about a journey." />
+            <WhatsAppDetails />
+          </div>
         </div>
       </section>
 
@@ -216,9 +225,9 @@ export default function HomePage() {
             organise the whole of it.
           </p>
           <div className="mt-8 flex w-full max-w-xs flex-col gap-3">
-            <ButtonLink href="/request">Meet with an advisor</ButtonLink>
-            <ButtonLink href="/contact" variant="outline">
-              Contact us
+            <WhatsAppButton message="Hello Offness, I’d like to start planning a journey." />
+            <ButtonLink href="/request" variant="outline">
+              Apply for membership
             </ButtonLink>
           </div>
         </div>
@@ -236,7 +245,7 @@ export default function HomePage() {
           essentials or designing once-in-a-lifetime experiences. Every moment is tailored to you.
         </p>
         <div className="mt-8">
-          <ButtonLink href="/#services">Discover our concierge</ButtonLink>
+          <WhatsAppButton message="Hello Offness, I’d like to know more about the concierge.">Ask the concierge</WhatsAppButton>
         </div>
         <div className="mt-12 text-left">
           <Carousel label="Concierge experiences">
@@ -307,11 +316,12 @@ export default function HomePage() {
           <div className="md:pr-12">
             <h2 className="text-[0.85rem] font-medium uppercase tracking-[0.18em] text-ink">The Offness app</h2>
             <p className="mt-4 max-w-md text-sm leading-relaxed text-ink-soft">
-              Every itinerary, every booking and your designer, in one place. Members receive an
-              invitation to the app when their first journey is confirmed.
+              There isn’t one. Members use the app they already have. Your designer’s number is
+              saved in WhatsApp, your itineraries arrive there as documents, and every change is a
+              message, not a login.
             </p>
             <p className="mt-6 inline-block border hairline px-4 py-2 text-[0.66rem] uppercase tracking-[0.18em] text-ink-soft">
-              Members only
+              Just WhatsApp
             </p>
           </div>
           <div className="md:pl-12">
@@ -325,22 +335,31 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 15. Enquiry form */}
+      {/* 15. Start the conversation */}
       <section id="enquire" className="scroll-mt-20 border-t hairline bg-gradient-to-b from-ivory-deep to-ivory">
-        <div className="container-luxe py-16 sm:py-24">
-          <h2 className="display mx-auto max-w-xl text-center text-3xl text-ink sm:text-4xl">
-            Want to enquire about private membership? Fill out the form below.
+        <div className="container-luxe py-16 text-center sm:py-24">
+          <h2 className="display mx-auto max-w-xl text-3xl text-ink sm:text-4xl">
+            Start with a message. We’ll take it from there.
           </h2>
-          <p className="mt-4 text-center text-sm text-ink-soft">
-            For all other enquiries,{" "}
-            <Link href="/contact" className="underline underline-offset-4">
-              click here
+          <p className="mx-auto mt-5 max-w-lg text-sm leading-relaxed text-ink-soft">
+            Non-members are welcome to write. Tell us what you have in mind and a designer will
+            reply personally. If it is a fit, membership follows the first journey.
+          </p>
+          <div className="mt-10 flex flex-col items-center gap-4">
+            <WhatsAppButton message="Hello Offness, I’d like to talk about a journey." className="px-8 py-4 text-[0.78rem]" />
+            <WhatsAppDetails />
+          </div>
+          <p className="mt-10 text-xs text-stone">
+            Prefer email? Write to{" "}
+            <a href={`mailto:${siteConfig.email}`} className="text-ink underline underline-offset-4">
+              {siteConfig.email}
+            </a>{" "}
+            or use the{" "}
+            <Link href="/contact" className="text-ink underline underline-offset-4">
+              enquiry form
             </Link>
             .
           </p>
-          <div className="mt-12">
-            <EnquiryForm />
-          </div>
         </div>
       </section>
     </>

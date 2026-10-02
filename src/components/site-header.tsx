@@ -2,6 +2,7 @@ import Link from "next/link";
 import { siteConfig } from "@/lib/site";
 import { ButtonLink } from "@/components/ui/button";
 import { Wordmark } from "@/components/wordmark";
+import { WhatsAppButton } from "@/components/whatsapp";
 
 function Chevron() {
   return (
@@ -55,9 +56,15 @@ export function SiteHeader() {
         </nav>
 
         <div className="ml-auto hidden items-center gap-5 md:flex">
-          <ButtonLink href="/request" variant="outline" className="px-5 py-2.5">
-            Request a call
-          </ButtonLink>
+          <WhatsAppButton message="Hello Offness," className="px-5 py-2.5">
+            Message us
+          </WhatsAppButton>
+          <Link
+            href="/request"
+            className="text-[0.66rem] font-medium uppercase tracking-[0.18em] text-ink-soft hover:text-ink"
+          >
+            Apply
+          </Link>
           <span aria-hidden="true" className="h-4 w-px bg-ink/30" />
           <Link
             href="/members"
@@ -103,8 +110,11 @@ export function SiteHeader() {
               ))}
             </ul>
             <div className="mt-4 flex flex-col gap-3 border-t hairline pt-4">
-              <ButtonLink href="/request" className="w-full">
-                Request a call
+              <WhatsAppButton message="Hello Offness," className="w-full">
+                Message us
+              </WhatsAppButton>
+              <ButtonLink href="/request" variant="outline" className="w-full">
+                Apply
               </ButtonLink>
               <Link href="/members" className="text-center text-[0.7rem] uppercase tracking-[0.18em] text-ink-soft">
                 Login

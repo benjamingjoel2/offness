@@ -18,7 +18,7 @@ export const testimonials: Testimonial[] = [
   },
   {
     quote:
-      "I asked for somewhere quiet. They sent one proposal, not five. It was the right one.",
+      "I sent one WhatsApp from the runway asking for somewhere quiet. By the time we landed there was one proposal, not five. It was the right one.",
     attribution: "House member, Singapore",
   },
 ];

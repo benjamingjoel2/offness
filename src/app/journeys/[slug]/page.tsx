@@ -5,6 +5,7 @@ import { JourneyArtwork } from "@/components/journey-artwork";
 import { JourneyCard } from "@/components/journey-card";
 import { formatGbp, formatNights } from "@/lib/format";
 import { getJourney, journeys } from "@/lib/journeys";
+import { WhatsAppButton } from "@/components/whatsapp";
 
 export function generateStaticParams() {
   return journeys.map((journey) => ({ slug: journey.slug }));
@@ -45,7 +46,9 @@ export default async function JourneyPage(props: PageProps<"/journeys/[slug]">) 
               {journey.summary}
             </p>
             <div className="mt-10 flex flex-wrap gap-4">
-              <ButtonLink href={`/request?journey=${journey.slug}`}>Ask about this journey</ButtonLink>
+              <WhatsAppButton message={`Hello Offness, I’d like to ask about “${journey.name}”.`}>
+                Ask about this journey
+              </WhatsAppButton>
               <ButtonLink href="/journeys" variant="ghost">
                 All journeys
               </ButtonLink>
@@ -96,8 +99,11 @@ export default async function JourneyPage(props: PageProps<"/journeys/[slug]">) 
                 </dd>
               </div>
             </dl>
-            <ButtonLink href={`/request?journey=${journey.slug}`} className="mt-8 w-full">
-              Ask about this journey
+            <WhatsAppButton message={`Hello Offness, I’d like to ask about “${journey.name}”.`} className="mt-8 w-full">
+              Ask on WhatsApp
+            </WhatsAppButton>
+            <ButtonLink href={`/request?journey=${journey.slug}`} variant="ghost" className="mt-2 w-full">
+              Or send a written request
             </ButtonLink>
           </aside>
         </div>
